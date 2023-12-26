@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
+import moment from 'moment';
 
 const App = () => {
+    // default는 멜론으로
     const [selectedPriority, setSelectedPriority] = useState({
-        first: '',
-        second: '',
-        third: ''
+        first: 'melon',
+        second: 'melon',
+        third: 'melon'
     });
     const [trackList, setTrackList] = useState([]);
 

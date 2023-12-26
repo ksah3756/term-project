@@ -3,12 +3,12 @@ const router = express.Router();
 const getMelonChart = require("../crawling/melonCrawling");
 const getBugsChart = require("../crawling/bugsCrawling");
 const getGenieChart = require("../crawling/genieCrawling");
+const Chart = require("../models/chart");
 
 router.get('/', async (req, res) => {
     try{
         const { first, second, third } = req.query;
-
-        // Process the selected priorities (for demonstration, just sending them back as JSON)
+        
         const priority = { first, second, third };
         console.log(priority);
 
@@ -37,7 +37,15 @@ router.get('/', async (req, res) => {
 
         const sortedTrack = Object.entries(track)
             .sort(([, a], [, b]) => b.score - a.score).slice(0,100);
-        console.log(sortedTrack);
+        //console.log(sortedTrack);
+        
+        await Chart.create({
+            pri1: first,
+            pri2: second,
+            pri3: third,
+            chart: sortedTrack,
+        });
+
         res.json(sortedTrack);
     }
     catch(err){
